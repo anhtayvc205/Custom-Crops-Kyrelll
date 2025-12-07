@@ -3,8 +3,8 @@ plugins {
     id("com.gradleup.shadow") version "9.2.2"
 }
 
-val git : String = versionBanner()
-val builder : String = builder()
+val git: String = versionBanner()
+val builder: String = builder()
 ext["git_version"] = git
 ext["builder"] = builder
 
@@ -28,10 +28,6 @@ subprojects {
     }
 }
 
-fun versionBanner() = project.providers.exec {
-    commandLine("git", "rev-parse", "--short=8", "HEAD")
-}.standardOutput.asText.map { it.trim() }.getOrElse("Unknown")
-
-fun builder() = project.providers.exec {
-    commandLine("git", "config", "user.name")
-}.standardOutput.asText.map { it.trim() }.getOrElse("Unknown")
+// ✅ Đã fix lỗi git: thay vì chạy git command, ta trả về chuỗi tĩnh
+fun versionBanner() = "dev"
+fun builder() = "github"
